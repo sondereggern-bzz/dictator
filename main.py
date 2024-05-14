@@ -61,10 +61,11 @@ def main():
     character = create_character()
     display_character(character)
 
-    populariy = 0
+    popularity = 0
     fear = 10
     US_relations = 0
     USSR_relations = 0
+    is_game_over = False
 
     if character["rise_to_power"] == "CIA-backed coup":
         US_relations += 20
@@ -75,34 +76,57 @@ def main():
     print("You can now start the game \n you are now going for a walk outside the palace and you see a group of people protesting against you \n what do you do? \n 1. Talk to them \n 2. Shoot thier Leader \n 3. Run back to the palace and send the army to arrest them \n 4. Shoot them all \n 5. Ignore them")
     choice = input("Enter the number corresponding to your choice: ")
     if choice == "1":
-        if populariy < 0 and fear < 0:
+        if popularity < 0 and fear < 0:
             print("As you approched them, a protster shot you and you died")
-        elif populariy >= 0 and fear <= 0:
+        elif popularity >= 0 and fear <= 0:
             print("You talked to them and they were happy with your words and they left")
-            populariy += 10
+            popularity += 10
             fear += 0
         elif fear > 20:
             print("your mere presence scared them and they left")
 
     elif choice == "2":
         print("You walked up to the leader, pulled out your Pistol and shot him in the head, the Protestors are horrified and they start running away")
-        populariy -= 10
+        popularity -= 10
         fear += 10
     elif choice == "3":
         print("You ran back to the palace and sent the army to disperse them, the army killed 5 of them and the rest fled")
-        populariy -= 7
+        popularity -= 7
         fear += 5
     elif choice == "4":
         print("You pulled out your Pistol and started firing blindly like a maniac, untill your second in command stopped you and took you back to the palace")
-        populariy -= 20
+        popularity -= 20
         fear += 20
+        US_relations -= 10
+        USSR_relations -= 5
     elif choice == "5":
         print("You ignored them and they left after a while")
-        populariy -= 5
+        popularity -= 5
         fear += 0
 
-    print(f"Your popularity is {populariy} and your feared-level is {fear}")
-    print("You are now back in the palace and a delegation from the US and the USSR are here to meet you \n what do you do? \n 1. Meet them \n 2. Ignore them \n 3. Send your second in command to meet them \n 4. ignore the USSR \n 5.Ignore the US")
+    if is_game_over:
+        return  # End the game if it's already over
+
+        # Additional conditions for game over
+    if popularity < 75 and fear < 50:
+        print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
+        is_game_over = True
+    elif popularity < 150:
+        print("Your popularity is too low. You were overthrown. Game over.")
+        is_game_over = True
+    elif fear > 50:
+        print("Your fear is too high. You were overthrown. Game over.")
+        is_game_over = True
+    elif US_relations < 0 or USSR_relations < 0:
+        print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
+        is_game_over = True
+
+    if not is_game_over:
+        print(f"Your popularity is {popularity} and your fear level is {fear}.")
+        print(f"Your relations with the US is {US_relations} and your relations with the USSR is {USSR_relations}")
+        print(
+            "You are now back in the palace and a delegation from the US and the USSR are here to meet you \n what do you do? \n 1. Meet them \n 2. Ignore them \n 3. Send your second in command to meet them \n 4. Ignore the USSR \n 5.Ignore the US")
+
 
 
 
