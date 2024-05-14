@@ -3,7 +3,6 @@ def create_character():
 
     # Name des Charakters eingeben
     character["name"] = input("Enter your dictator's name: ")
-
     # Auswahl, wie man zur Macht kam
     print("How did you come to power?")
     print("1. CIA-backed coup")
@@ -17,7 +16,7 @@ def create_character():
         "4": "Military coup"
     }
     choice = input("Enter the number corresponding to your choice: ")
-    character["rise to power"] = power_methods.get(choice, "Unknown")
+    character["rise_to_power"] = power_methods.get(choice, "Unknown")
 
     # Wenn CIA-backed coup gewählt wird, kommunistische Ausrichtung ausschließen
     if character["rise_to_power"] == "CIA-backed coup":
@@ -50,7 +49,8 @@ def create_character():
 def display_character(character):
     print("Character creation complete! Here are your details:")
     for key, value in character.items():
-        print(f"{key}: {value}")
+        formatted_key = key.replace("_", " ").capitalize()
+        print(f"{formatted_key}: {value}")
 
 
 def main():
