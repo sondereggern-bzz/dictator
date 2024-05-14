@@ -61,7 +61,7 @@ def main():
     character = create_character()
     display_character(character)
 
-    popularity = 0
+    popularity = 10
     fear = 10
     US_relations = 0
     USSR_relations = 0
@@ -77,13 +77,14 @@ def main():
     choice = input("Enter the number corresponding to your choice: ")
     if choice == "1":
         if popularity < 0 and fear < 0:
-            print("As you approched them, a protster shot you and you died")
-        elif popularity >= 0 and fear <= 0:
+            print("As you approached them, a protester shot you and you died. Game over.")
+            is_game_over = True
+        elif popularity >= 0 and fear <= 20:
             print("You talked to them and they were happy with your words and they left")
             popularity += 10
             fear += 0
         elif fear > 20:
-            print("your mere presence scared them and they left")
+            print("Your mere presence scared them and they left")
 
     elif choice == "2":
         print("You walked up to the leader, pulled out your Pistol and shot him in the head, the Protestors are horrified and they start running away")
@@ -104,29 +105,30 @@ def main():
         popularity -= 5
         fear += 0
 
-    if is_game_over:
-        return  # End the game if it's already over
 
         # Additional conditions for game over
-    if popularity < 75 and fear < 50:
+    if popularity < -75 and fear < 50:
         print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
         is_game_over = True
-    elif popularity < 150:
+    elif popularity < -150:
         print("Your popularity is too low. You were overthrown. Game over.")
         is_game_over = True
     elif fear > 50:
         print("Your fear is too high. You were overthrown. Game over.")
         is_game_over = True
-    elif US_relations < 0 or USSR_relations < 0:
+    elif US_relations < -20 or USSR_relations < -20:
         print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
         is_game_over = True
+
+
+    if is_game_over:
+        return  # End the game if it's already over
 
     if not is_game_over:
         print(f"Your popularity is {popularity} and your fear level is {fear}.")
         print(f"Your relations with the US is {US_relations} and your relations with the USSR is {USSR_relations}")
         print(
             "You are now back in the palace and a delegation from the US and the USSR are here to meet you \n what do you do? \n 1. Meet them \n 2. Ignore them \n 3. Send your second in command to meet them \n 4. Ignore the USSR \n 5.Ignore the US")
-
 
 
 
