@@ -175,7 +175,7 @@ def main():
         if character.handle_scenario():
             return  # End the game if it's already over
 
-        if character.handle_delegation():
+        if character.meet_delegation():
             return  # End the game if it's already over
 
         # Check game-over conditions...
