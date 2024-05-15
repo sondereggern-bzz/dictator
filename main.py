@@ -8,7 +8,7 @@ class Character:
         self.US_relations = US_relations
         self.USSR_relations = USSR_relations
 
-    def handle_protesters(self):
+    def handle_scenario(self):
         print("You are now going for a walk outside the palace and you see a group of people protesting against you")
         print("What do you do?")
         print("1. Talk to them")
@@ -19,17 +19,33 @@ class Character:
         choice = input("Enter the number corresponding to your choice: ")
 
         if choice == "1":
-            if self.talk_to_protesters():
+            if self.popularity < 0 and self.fear < 0:
+                print("As you approached them, a protester shot you and you died. Game over.")
                 return True
+            elif self.popularity >= 0 and self.fear <= 20:
+                print("You talked to them and they were happy with your words and they left")
+                self.popularity += 10
+                self.fear += 0
+            elif self.fear > 20:
+                print("Your mere presence scared them and they left")
         elif choice == "2":
-            self.shoot_protest_leader()
+            print("You walked up to the leader, pulled out your Pistol and shot him in the head, the Protestors are horrified and they start running away")
+            self.popularity -= 10
+            self.fear += 10
         elif choice == "3":
-            self.send_army()
+            print("You ran back to the palace and sent the army to disperse them, the army killed 5 of them and the rest fled")
+            self.popularity -= 7
+            self.fear += 5
         elif choice == "4":
-            self.shoot_all()
+            print("You pulled out your Pistol and started firing blindly like a maniac, until your second in command stopped you and took you back to the palace")
+            self.popularity -= 20
+            self.fear += 20
+            self.US_relations -= 10
+            self.USSR_relations -= 5
         elif choice == "5":
-            if self.ignore_protesters():
-                return True
+            print("You ignored them and they left after a while")
+            self.popularity -= 5
+            self.fear += 0
         else:
             print("Invalid choice. Please enter a valid option.")
 
@@ -156,12 +172,13 @@ def main():
     display_character(character)
 
     while True:
-        if character.handle_protesters():
+        if character.handle_scenario():
             return  # End the game if it's already over
 
-        character.meet_delegation()  # Handle the delegation scenario
+        if character.handle_delegation():
+            return  # End the game if it's already over
 
-        # Check game-over conditions after each scenario
+        # Check game-over conditions...
         if character.popularity < -75 and character.fear < 50:
             print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
             return
