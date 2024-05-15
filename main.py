@@ -70,6 +70,34 @@ class Character:
         self.fear += 0
         return False
 
+    def meet_delegation(self):
+        print("You are now back in the palace and a delegation from the US and the USSR are here to meet you")
+        print("What do you do?")
+        print("1. Meet them (Get +5 for US and USSR relations)")
+        print("2. Send your second in command to meet them (Get +2 for US and USSR relations)")
+        print("3. Ignore the USSR delegation (-20 USSR relations, +20 US relations)")
+        print("4. Ignore the US delegation (+20 USSR relations, -20 US relations)")
+        choice = input("Enter the number corresponding to your choice: ")
+
+        if choice == "1":
+            print("You decided to meet the delegations.")
+            self.US_relations += 5
+            self.USSR_relations += 5
+        elif choice == "2":
+            print("You sent your second in command to meet the delegations.")
+            self.US_relations += 2
+            self.USSR_relations += 2
+        elif choice == "3":
+            print("You chose to ignore the USSR delegation.")
+            self.US_relations += 20
+            self.USSR_relations -= 20
+        elif choice == "4":
+            print("You chose to ignore the US delegation.")
+            self.US_relations -= 20
+            self.USSR_relations += 20
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
 def create_character():
     name = input("Enter your dictator's name: ")
     rise_to_power = choose_power_method()
@@ -120,6 +148,8 @@ def display_character(character):
         formatted_key = key.replace("_", " ").capitalize()
         print(f"{formatted_key}: {value}")
 
+
+
 def main():
     print("Welcome to the Dictator Text Game! You are now in charge after the Royal Family has been overthrown")
     character = create_character()
@@ -129,7 +159,9 @@ def main():
         if character.handle_protesters():
             return  # End the game if it's already over
 
-        # Check game-over conditions...
+        character.meet_delegation()  # Handle the delegation scenario
+
+        # Check game-over conditions after each scenario
         if character.popularity < -75 and character.fear < 50:
             print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
             return
@@ -143,7 +175,5 @@ def main():
             print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
             return
 
-    # If game is not over, continue with the game
-    print(f"Your popularity is {character.popularity} and your fear level is {character.fear}.")
-    print(f"Your relations with the US is {character.US_relations} and your relations with the USSR is {character.USSR_relations}")
-    print("You are now back in the palace and a delegation from the US and the USSR are here to meet you \n what do you do? \n 1. Meet them \n 2. Ignore them \n 3. Send your second in command to meet them \n 4. Ignore the USSR \n 5. Ignore the US")
+if __name__ == "__main__":
+    main()
