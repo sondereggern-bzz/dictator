@@ -1,3 +1,24 @@
+import random
+
+def display_statistics(character):
+    print("Character Statistics:")
+    print(f"Name: {character.name}")
+    print(f"Political Alignment: {character.political_alignment}")
+    print(f"Rise to Power: {character.rise_to_power}")
+    print(f"Popularity: {character.popularity}")
+    print(f"Fear: {character.fear}")
+    print(f"US Relations: {character.US_relations}")
+    print(f"USSR Relations: {character.USSR_relations}")
+    print()
+
+def main_menu():
+    print("Welcome to the Dictator Text Game!")
+    print("1. View Statistics")
+    print("2. Start Game")
+    print("3. Exit")
+    choice = input("Enter the number corresponding to your choice: ")
+    return choice
+
 class Character:
     def __init__(self, name, rise_to_power, political_alignment, popularity=10, fear=10, US_relations=0, USSR_relations=0):
         self.name = name
@@ -165,18 +186,20 @@ def display_character(character):
         print(f"{formatted_key}: {value}")
 
 
-
 def main():
-    print("Welcome to the Dictator Text Game! You are now in charge after the Royal Family has been overthrown")
     character = create_character()
-    display_character(character)
-
     while True:
-        if character.handle_scenario():
-            return  # End the game if it's already over
-
-        if character.meet_delegation():
-            return  # End the game if it's already over
+        choice = main_menu()
+        if choice == "1":
+            display_statistics(character)
+        elif choice == "2":
+            scenario = random.choice(["protester", "delegation"])
+            if scenario == "protester":
+                if character.handle_scenario():
+                    return  # End the game if it's already over
+            elif scenario == "delegation":
+                if character.meet_delegation():
+                    return  # End the game if it's already over
 
         # Check game-over conditions...
         if character.popularity < -75 and character.fear < 50:
@@ -191,6 +214,11 @@ def main():
         elif character.US_relations < -20 or character.USSR_relations < -20:
             print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
             return
+
+        elif choice == "3":
+            print("Exiting the game. Goodbye!")
+            return
+
 
 if __name__ == "__main__":
     main()
