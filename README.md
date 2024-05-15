@@ -1,1 +1,1 @@
-# dictator-simulator (Tropico Text Based Clone
+# dictator-simulator (Tropico Text Based Clone)
