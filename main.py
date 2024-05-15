@@ -8,6 +8,33 @@ class Character:
         self.US_relations = US_relations
         self.USSR_relations = USSR_relations
 
+    def handle_protesters(self):
+        print("You are now going for a walk outside the palace and you see a group of people protesting against you")
+        print("What do you do?")
+        print("1. Talk to them")
+        print("2. Shoot their Leader")
+        print("3. Run back to the palace and send the army to arrest them")
+        print("4. Shoot them all")
+        print("5. Ignore them")
+        choice = input("Enter the number corresponding to your choice: ")
+
+        if choice == "1":
+            if self.talk_to_protesters():
+                return True
+        elif choice == "2":
+            self.shoot_protest_leader()
+        elif choice == "3":
+            self.send_army()
+        elif choice == "4":
+            self.shoot_all()
+        elif choice == "5":
+            if self.ignore_protesters():
+                return True
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+        return False
+
     def talk_to_protesters(self):
         if self.popularity < 0 and self.fear < 0:
             print("As you approached them, a protester shot you and you died. Game over.")
@@ -98,39 +125,23 @@ def main():
     character = create_character()
     display_character(character)
 
-    print("You can now start the game \n you are now going for a walk outside the palace and you see a group of people protesting against you \n what do you do? \n 1. Talk to them \n 2. Shoot thier Leader \n 3. Run back to the palace and send the army to arrest them \n 4. Shoot them all \n 5. Ignore them")
-    choice = input("Enter the number corresponding to your choice: ")
-
-    if choice == "1":
-        if character.talk_to_protesters():
+    while True:
+        if character.handle_protesters():
             return  # End the game if it's already over
 
-    elif choice == "2":
-        character.shoot_protest_leader()
-
-    elif choice == "3":
-        character.send_army()
-
-    elif choice == "4":
-        character.shoot_all()
-
-    elif choice == "5":
-        if character.ignore_protesters():
-            return  # End the game if it's already over
-
-    # Additional conditions for game over
-    if character.popularity < -75 and character.fear < 50:
-        print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
-        return
-    elif character.popularity < -150:
-        print("Your popularity is too low. You were overthrown. Game over.")
-        return
-    elif character.fear > 50:
-        print("Your fear is too high. You were overthrown. Game over.")
-        return
-    elif character.US_relations < -20 or character.USSR_relations < -20:
-        print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
-        return
+        # Check game-over conditions...
+        if character.popularity < -75 and character.fear < 50:
+            print("Your popularity is too low and fear is too low. You were overthrown. Game over.")
+            return
+        elif character.popularity < -150:
+            print("Your popularity is too low. You were overthrown. Game over.")
+            return
+        elif character.fear > 50:
+            print("Your fear is too high. You were overthrown. Game over.")
+            return
+        elif character.US_relations < -20 or character.USSR_relations < -20:
+            print("Your relations with the US or USSR are too low. They have decided to invade. Game over.")
+            return
 
     # If game is not over, continue with the game
     print(f"Your popularity is {character.popularity} and your fear level is {character.fear}.")
