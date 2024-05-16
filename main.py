@@ -33,7 +33,21 @@ class Character:
 
     def apply_rise_to_power_modifier(self):
         if self.rise_to_power == "CIA-backed coup":
+            self.US_relations += 15
+            self.money += 500  # Bonus money for CIA-backed dictators
+        elif self.rise_to_power == "Communist revolution":
+            self.US_relations -= 10
+            self.USSR_relations += 15
+            self.popularity += 5
+        elif self.rise_to_power == "Democratic election":
+            self.popularity += 10
+            self.money += 200
             self.US_relations += 10
+        elif self.rise_to_power == "Military coup":
+            self.popularity += 5
+            self.fear += 5
+            self.money += 300
+            self.US_relations += 5
         # Add more modifiers as needed for different rise to power scenarios
 
     def apply_political_alignment_modifier(self):
