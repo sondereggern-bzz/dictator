@@ -41,6 +41,20 @@ class Character:
         if self.political_alignment == "Communist":
             self.US_relations -= 5
             self.USSR_relations += 10
+        elif self.political_alignment == "Nationalist":
+            self.US_relations += 5
+            self.USSR_relations -= 5
+        elif self.political_alignment == "Capitalist":
+            self.US_relations += 10
+            self.USSR_relations -= 5
+            self.money += 500  # Bonus money for capitalist dictators
+        elif self.political_alignment == "Anti-Communist":
+            self.US_relations += 15
+            self.USSR_relations -= 10
+        elif self.political_alignment == "Democratic":
+            self.US_relations += 10
+            self.USSR_relations += -5
+
         # Add more modifiers as needed for different political alignments
 
     def handle_protester_scenario(self):
@@ -177,10 +191,10 @@ def main():
             scenario = random.choice(["protester", "delegation"])
             if scenario == "protester":
                 if character.handle_protester_scenario():
-                    return  # End the game if it's already over
+                    return
             elif scenario == "delegation":
                 if character.handle_delegation_scenario():
-                    return  # End the game if it's already over
+                    return
 
         # Check game-over conditions...
         if character.popularity < -75 and character.fear < 50:
